@@ -44,6 +44,7 @@ public class Main extends Application {
 
     @Override
     public void stop() {
+        communicationManager.stop();
         timer.cancel();
         inputManager.stop();
     }

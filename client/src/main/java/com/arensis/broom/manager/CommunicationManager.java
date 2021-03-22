@@ -12,9 +12,9 @@ public class CommunicationManager {
 	private static final int BROOM_PORT = 2727;
 	private OutputStream outputStream;
 	private InputStream inputStream;
+	private  ServerSocket serverSocket;
 
 	public void start() {
-		ServerSocket serverSocket;
 		try {
 			serverSocket = new ServerSocket(BROOM_PORT);
 			Socket socket = serverSocket.accept();
@@ -35,6 +35,14 @@ public class CommunicationManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 			start();
+		}
+	}
+
+	public void stop(){
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
