@@ -11,6 +11,8 @@ import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -19,6 +21,8 @@ import javafx.stage.Stage;
 
 @SuppressWarnings("restriction")
 public class GuiManager {
+    private static final String STAGE_ICON_PATH = "image/stage-icon.png";
+    private static final String BOOST_ICON_PATH = "image/boost-icon.png";
     private static final String BAR_CHART_BLUE_STYLE_PATH = "./style/bar-chart-blue.css";
     private static final String PIE_CHART_RED_STYLE = "-fx-pie-color: #d50000";
     private static final String PIE_CHART_GREEN_STYLE = "-fx-pie-color: #64dd17";
@@ -28,6 +32,7 @@ public class GuiManager {
     private PieChart.Data motorValueData;
     private Label motorLabel;
     private Data<Number, String> steeringData;
+    private ImageView boostIcon;
 
     public void start(Stage primaryStage, InputManager inputManager) {
         final Scene scene;
@@ -35,10 +40,12 @@ public class GuiManager {
         final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
         primaryStage.setTitle("BROOM BROOM!");
+        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResource(STAGE_ICON_PATH).toExternalForm()));
         mainPane.add(createSteeringChart(), 0, 0);
         mainPane.add(createMotorChart(), 1, 0);
         mainPane.add(createMotorLabel(), 1, 0);
-        scene = new Scene(mainPane, 1000, 250);
+        mainPane.add(createBoostIcon(), 2, 0);
+        scene = new Scene(mainPane, 1200, 250);
         primaryStage.setX(bounds.getMinX() + bounds.getWidth() / 2f - scene.getWidth() / 2f);
         primaryStage.setY(bounds.getMinY() + bounds.getHeight() - scene.getHeight() - 50f);
         scene.setOnKeyPressed(inputManager);
@@ -60,6 +67,7 @@ public class GuiManager {
             this.motorValueData.setPieValue(-broomStatus.getMotorPower());
         }
         motorLabel.setText(String.valueOf(Math.abs(broomStatus.getMotorPower())));
+        boostIcon.setVisible(broomStatus.isBoost());
         this.steeringData.setXValue(broomStatus.getSteering());
     }
 
@@ -87,7 +95,7 @@ public class GuiManager {
         return motorChart;
     }
 
-    private Label createMotorLabel(){
+    private Label createMotorLabel() {
         motorLabel = new Label("0");
         motorLabel.setAlignment(Pos.CENTER);
         motorLabel.setTextAlignment(TextAlignment.CENTER);
@@ -109,10 +117,17 @@ public class GuiManager {
         steeringBarChart.getData().addAll(series);
         steeringBarChart.setLegendVisible(false);
 
-        steeringBarChart.getStylesheets().add(BAR_CHART_BLUE_STYLE_PATH);
+        steeringBarChart.getStylesheets().add(getClass().getClassLoader().getResource(BAR_CHART_BLUE_STYLE_PATH).toExternalForm());
         steeringBarChart.setAnimated(false);
 
         return steeringBarChart;
+    }
+
+    private ImageView createBoostIcon() {
+        boostIcon = new ImageView(getClass().getClassLoader().getResource(BOOST_ICON_PATH).toExternalForm());
+        boostIcon.setFitHeight(100);
+        boostIcon.setFitWidth(100);
+        return boostIcon;
     }
 
     private void applyChartColors() {

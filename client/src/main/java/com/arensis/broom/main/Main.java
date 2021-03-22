@@ -26,7 +26,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        communicationManager.start();
+        //communicationManager.start();
         guiManager.start(primaryStage, inputManager);
         startUpdateThread();
     }
@@ -36,7 +36,7 @@ public class Main extends Application {
             @Override
             public void run() {
                 final BroomStatus broomStatus = inputManager.fetchInputs();
-                communicationManager.update(broomStatus);
+                //communicationManager.update(broomStatus);
                 Platform.runLater(() -> guiManager.update(broomStatus));
             }
         }, 0, UPDATE_DELAY);

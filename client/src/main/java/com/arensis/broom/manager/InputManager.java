@@ -19,7 +19,6 @@ public class InputManager implements EventHandler<KeyEvent> {
     private KeyboardInput keyboardInput;
     private ControllerManager controllers;
     private boolean holdingBoost;
-    private boolean boost;
 
     public InputManager() {
         keyboardInput = new KeyboardInput();
@@ -46,7 +45,7 @@ public class InputManager implements EventHandler<KeyEvent> {
     private void calculateBoost(boolean buttonB) {
         if (buttonB) {
             if (!holdingBoost) {
-                boost = !boost;
+                broomStatus.setBoost(!broomStatus.isBoost());
                 holdingBoost = true;
             }
         } else {
@@ -55,8 +54,8 @@ public class InputManager implements EventHandler<KeyEvent> {
     }
 
     private void calculateMotorPowerFromGamepad(float lt, float rt) {
-        int boostedLt = Math.round(lt * (boost ? 100 : 50));
-        int boostedRt = Math.round(rt * (boost ? 100 : 50));
+        int boostedLt = Math.round(lt * (broomStatus.isBoost() ? 100 : 50));
+        int boostedRt = Math.round(rt * (broomStatus.isBoost() ? 100 : 50));
 
         applyMotorPower(boostedLt, boostedRt);
     }
