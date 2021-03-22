@@ -1,4 +1,4 @@
-package com.arensis.crcr.model;
+package com.arensis.broom.model;
 
 public class KeyboardInput {
     private boolean up;

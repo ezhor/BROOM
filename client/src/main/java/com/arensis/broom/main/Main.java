@@ -1,9 +1,9 @@
-package com.arensis.crcr.main;
+package com.arensis.broom.main;
 
-import com.arensis.crcr.manager.CommunicationManager;
-import com.arensis.crcr.manager.GuiManager;
-import com.arensis.crcr.manager.InputManager;
-import com.arensis.crcr.model.RobotStatus;
+import com.arensis.broom.manager.CommunicationManager;
+import com.arensis.broom.manager.GuiManager;
+import com.arensis.broom.manager.InputManager;
+import com.arensis.broom.model.BroomStatus;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -26,10 +26,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         //communicationManager.connect(CRCR_IP);
-        RobotStatus currentStatus = communicationManager.fetchCurrentStatus();
-        inputManager.setRobotStatus(currentStatus);
         guiManager.start(primaryStage, inputManager);
-        guiManager.update(currentStatus);
         startUpdateThread();
     }
 
@@ -46,9 +43,9 @@ public class Main extends Application {
 
         @Override
         public void run() {
-            final RobotStatus robotStatus = inputManager.fetchInputs();
-            guiManager.update(robotStatus);
-            System.out.println(robotStatus);
+            final BroomStatus broomStatus = inputManager.fetchInputs();
+            guiManager.update(broomStatus);
+            System.out.println(broomStatus);
             //communicationManager.update(robotStatus);
         }
 

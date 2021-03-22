@@ -1,6 +1,6 @@
-package com.arensis.crcr.manager;
+package com.arensis.broom.manager;
 
-import com.arensis.crcr.model.RobotStatus;
+import com.arensis.broom.model.BroomStatus;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,20 +31,8 @@ public class CommunicationManager {
 		}
 	}
 
-	public void update(RobotStatus robotStatus) {
-		send(robotStatus.toString(), ROBOT_STATUS_HEADER);
-	}
-
-	//TODO
-	public RobotStatus fetchCurrentStatus() {
-		final RobotStatus robotStatus = new RobotStatus();
-		robotStatus.setLeftMotorPower(72);
-		robotStatus.setRightMotorPower(27);
-		robotStatus.setShoulderRotation(90);
-		robotStatus.setElbowRotation(34);
-		robotStatus.setWristRotation(76);
-		robotStatus.setHandRotation(12);
-		return robotStatus;
+	public void update(BroomStatus broomStatus) {
+		send(broomStatus.toString(), ROBOT_STATUS_HEADER);
 	}
 
 	private void send(String string, String header){
