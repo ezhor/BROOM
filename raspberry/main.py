@@ -12,5 +12,4 @@ while True:
     if data != "\n":
         message += data
     else:
-        print(message)
         message = ""
