@@ -4,3 +4,4 @@ P1=$!
 nc -u -l 2222 | mplayer -noconsolecontrols -fps 200 -demuxer h264es - &
 P2=$!
 wait $P1 $P2
+fuser 2727/tcp
