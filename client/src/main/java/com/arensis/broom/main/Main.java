@@ -32,28 +32,19 @@ public class Main extends Application {
     }
 
     private void startUpdateThread() {
-        timer.schedule(new BroomStatusUpdater(), 0, UPDATE_DELAY);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                final BroomStatus broomStatus = inputManager.fetchInputs();
+                communicationManager.update(broomStatus);
+                Platform.runLater(() -> guiManager.update(broomStatus));
+            }
+        }, 0, UPDATE_DELAY);
     }
 
     @Override
     public void stop() {
         timer.cancel();
         inputManager.stop();
-    }
-
-    private class BroomStatusUpdater extends TimerTask {
-
-        @Override
-        public void run() {
-            final BroomStatus broomStatus = inputManager.fetchInputs();
-            //communicationManager.update(broomStatus);
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiManager.update(broomStatus);
-                }
-            });
-        }
-
     }
 }
