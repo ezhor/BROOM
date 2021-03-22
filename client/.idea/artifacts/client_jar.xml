@@ -6,7 +6,12 @@
         <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="client" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/strikerx3/jxinput/1.0.0/jxinput-1.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/uk/co/electronstudio/sdl2gdx/sdl2gdx/1.0.4/sdl2gdx-1.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-jnigen/1.9.10/gdx-jnigen-1.9.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-controllers/1.9.9/gdx-controllers-1.9.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/javaparser/javaparser-core/2.3.0/javaparser-core-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx/1.9.9/gdx-1.9.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/WilliamAHartman/Jamepad/1.4.0/Jamepad-1.4.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
