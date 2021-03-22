@@ -5,6 +5,7 @@ import com.arensis.broom.manager.GuiManager;
 import com.arensis.broom.manager.InputManager;
 import com.arensis.broom.model.BroomStatus;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.util.Timer;
@@ -12,8 +13,8 @@ import java.util.TimerTask;
 
 @SuppressWarnings("restriction")
 public class Main extends Application {
-    private static final int UPDATE_TIME = 50;
-    private static final String CRCR_IP = "mirandaserver.ddns.net";
+    private static final int UPDATE_DELAY = 50;
+    private static final String RELAY_IP = "mirandaserver.ddns.net";
     private final GuiManager guiManager = new GuiManager();
     private final InputManager inputManager = new InputManager();
     private final CommunicationManager communicationManager = new CommunicationManager();
@@ -25,28 +26,33 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //communicationManager.connect(CRCR_IP);
+        communicationManager.start();
         guiManager.start(primaryStage, inputManager);
         startUpdateThread();
     }
 
     private void startUpdateThread() {
-        timer.schedule(new RobotStatusUpdater(), 0, UPDATE_TIME);
+        timer.schedule(new BroomStatusUpdater(), 0, UPDATE_DELAY);
     }
 
     @Override
     public void stop() {
         timer.cancel();
+        inputManager.stop();
     }
 
-    private class RobotStatusUpdater extends TimerTask {
+    private class BroomStatusUpdater extends TimerTask {
 
         @Override
         public void run() {
             final BroomStatus broomStatus = inputManager.fetchInputs();
-            guiManager.update(broomStatus);
-            System.out.println(broomStatus);
-            //communicationManager.update(robotStatus);
+            //communicationManager.update(broomStatus);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiManager.update(broomStatus);
+                }
+            });
         }
 
     }

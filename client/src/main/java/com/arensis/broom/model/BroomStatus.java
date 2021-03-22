@@ -8,33 +8,6 @@ public class BroomStatus {
     private int steering;
     private boolean boost;
 
-    public BroomStatus() {
-
-    }
-
-    public BroomStatus(String serializedRobotStatus) {
-        final String[] propertiesArray = serializedRobotStatus.split(";");
-        final HashMap<String, Integer> propertiesMap = new HashMap<>();
-        String[] propertyArray;
-
-        for (String propertyString : propertiesArray) {
-            if (propertyString != null && !propertyString.isEmpty()) {
-                propertyArray = propertyString.split("=");
-                propertiesMap.put(propertyArray[0], Integer.parseInt(propertyArray[1]));
-            }
-        }
-
-        for (Field field : getClass().getDeclaredFields()) {
-            if (propertiesMap.get(field.getName()) != null) {
-                try {
-                    field.setInt(this, propertiesMap.get(field.getName()));
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     public int getMotorPower() {
         return motorPower;
     }
@@ -53,11 +26,7 @@ public class BroomStatus {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(motorPower)
-                .append(";")
-                .append(steering);
-        return sb.toString();
+        return motorPower + ";" + steering;
     }
 
     public boolean isBoost() {

@@ -81,14 +81,14 @@ public class InputManager implements EventHandler<KeyEvent> {
             lx = 0;
         }
 
-        broomStatus.setSteering(Math.round(lx * 180f));
+        broomStatus.setSteering(Math.round(lx * 100f));
     }
 
     private void calculateSteeringFromKeyboard() {
         int rt = keyboardInput.isUp() ? 100 : 0;
         int lt = keyboardInput.isDown() ? 100 : 0;
 
-        broomStatus.setSteering(keyboardInput.isRight() ? 180 : keyboardInput.isLeft() ? -180 : 0);
+        broomStatus.setSteering(keyboardInput.isRight() ? 100 : keyboardInput.isLeft() ? -100 : 0);
     }
 
     @Override
@@ -107,6 +107,10 @@ public class InputManager implements EventHandler<KeyEvent> {
                 keyboardInput.setRight(KEY_PRESSED.equals(event.getEventType().getName()));
                 break;
         }
+    }
+
+    public void stop(){
+        controllers.quitSDLGamepad();
     }
 
 }

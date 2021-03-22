@@ -10,7 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -23,6 +26,7 @@ public class GuiManager {
     private DoughnutChart motorChart;
     private PieChart.Data motorEmptyData;
     private PieChart.Data motorValueData;
+    private Label motorLabel;
     private Data<Number, String> steeringData;
 
     public void start(Stage primaryStage, InputManager inputManager) {
@@ -33,6 +37,7 @@ public class GuiManager {
         primaryStage.setTitle("BROOM BROOM!");
         mainPane.add(createSteeringChart(), 0, 0);
         mainPane.add(createMotorChart(), 1, 0);
+        mainPane.add(createMotorLabel(), 1, 0);
         scene = new Scene(mainPane, 1000, 250);
         primaryStage.setX(bounds.getMinX() + bounds.getWidth() / 2f - scene.getWidth() / 2f);
         primaryStage.setY(bounds.getMinY() + bounds.getHeight() - scene.getHeight() - 50f);
@@ -54,6 +59,7 @@ public class GuiManager {
             this.motorEmptyData.setPieValue(100 + broomStatus.getMotorPower());
             this.motorValueData.setPieValue(-broomStatus.getMotorPower());
         }
+        motorLabel.setText(String.valueOf(Math.abs(broomStatus.getMotorPower())));
         this.steeringData.setXValue(broomStatus.getSteering());
     }
 
@@ -81,8 +87,18 @@ public class GuiManager {
         return motorChart;
     }
 
+    private Label createMotorLabel(){
+        motorLabel = new Label("0");
+        motorLabel.setAlignment(Pos.CENTER);
+        motorLabel.setTextAlignment(TextAlignment.CENTER);
+        motorLabel.setLabelFor(motorChart);
+        motorLabel.setMinWidth(500);
+        motorLabel.setFont(Font.font("Arial", 50));
+        return motorLabel;
+    }
+
     private BarChart<Number, String> createSteeringChart() {
-        final NumberAxis xAxis = new NumberAxis(-180, 180, 10);
+        final NumberAxis xAxis = new NumberAxis(-100, 100, 10);
         final CategoryAxis yAxis = new CategoryAxis();
         final BarChart<Number, String> steeringBarChart = new BarChart<>(xAxis, yAxis);
         final XYChart.Series<Number, String> series = new Series<>();
