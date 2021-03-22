@@ -1,11 +1,9 @@
 package com.arensis.broom.manager;
 
-import com.arensis.broom.model.KeyboardInput;
 import com.arensis.broom.model.BroomStatus;
-import com.github.strikerx3.jxinput.XInputAxes;
-import com.github.strikerx3.jxinput.XInputButtons;
-import com.github.strikerx3.jxinput.XInputDevice;
-import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import com.arensis.broom.model.KeyboardInput;
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
@@ -19,37 +17,34 @@ public class InputManager implements EventHandler<KeyEvent> {
 
     private BroomStatus broomStatus;
     private KeyboardInput keyboardInput;
+    private ControllerManager controllers;
     private boolean holdingBoost;
     private boolean boost;
 
     public InputManager() {
         keyboardInput = new KeyboardInput();
         broomStatus = new BroomStatus();
+        controllers = new ControllerManager();
+        controllers.initSDLGamepad();
     }
 
     public BroomStatus fetchInputs() {
-        XInputDevice device;
-        if (XInputDevice.isAvailable()) {
-            try {
-                device = XInputDevice.getDeviceFor(0);
-                if (device.poll()) {
-                    calculateBoost(device.getComponents().getButtons());
-                    calculateMotorPowerFromGamepad(device.getComponents().getAxes());
-                    calculateSteeringFromGamepad(device.getComponents().getAxes());
-                } else {
-                    calculateMotorPowerFromKeyboard();
-                    calculateSteeringFromKeyboard();
-                }
-            } catch (XInputNotLoadedException e) {
-                e.printStackTrace();
-            }
+        ControllerState controllerState = controllers.getState(0);
+        if (controllerState.isConnected) {
+            calculateBoost(controllerState.b);
+            calculateMotorPowerFromGamepad(controllerState.leftTrigger, controllerState.rightTrigger);
+            calculateSteeringFromGamepad(controllerState.leftStickX);
+        }else{
+            calculateMotorPowerFromKeyboard();
+            calculateSteeringFromKeyboard();
+
         }
 
         return broomStatus;
     }
 
-    private void calculateBoost(XInputButtons buttons) {
-        if (buttons.b) {
+    private void calculateBoost(boolean buttonB) {
+        if (buttonB) {
             if (!holdingBoost) {
                 boost = !boost;
                 holdingBoost = true;
@@ -59,21 +54,21 @@ public class InputManager implements EventHandler<KeyEvent> {
         }
     }
 
-    private void calculateMotorPowerFromGamepad(XInputAxes axes) {
-        int rt = Math.round(axes.rt * (boost ? 100 : 50));
-        int lt = Math.round(axes.lt * (boost ? 100 : 50));
+    private void calculateMotorPowerFromGamepad(float lt, float rt) {
+        int boostedLt = Math.round(lt * (boost ? 100 : 50));
+        int boostedRt = Math.round(rt * (boost ? 100 : 50));
 
-        applyMotorPower(rt, lt);
+        applyMotorPower(boostedLt, boostedRt);
     }
 
     private void calculateMotorPowerFromKeyboard() {
         int rt = keyboardInput.isUp() ? 100 : 0;
         int lt = keyboardInput.isDown() ? 100 : 0;
 
-        applyMotorPower(rt, lt);
+        applyMotorPower(lt, rt);
     }
 
-    private void applyMotorPower(int rt, int lt) {
+    private void applyMotorPower(int lt, int rt) {
         if (rt > 0) {
             broomStatus.setMotorPower(rt);
         } else {
@@ -81,9 +76,7 @@ public class InputManager implements EventHandler<KeyEvent> {
         }
     }
 
-    private void calculateSteeringFromGamepad(XInputAxes axes) {
-        float lx = axes.lx;
-
+    private void calculateSteeringFromGamepad(float lx) {
         if (lx < LX_DEAD_ZONE && lx > -LX_DEAD_ZONE) {
             lx = 0;
         }

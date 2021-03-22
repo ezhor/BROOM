@@ -20,6 +20,7 @@ public class GuiManager {
     private static final String PIE_CHART_RED_STYLE = "-fx-pie-color: #d50000";
     private static final String PIE_CHART_GREEN_STYLE = "-fx-pie-color: #64dd17";
 
+    private DoughnutChart motorChart;
     private PieChart.Data motorEmptyData;
     private PieChart.Data motorValueData;
     private Data<Number, String> steeringData;
@@ -44,8 +45,15 @@ public class GuiManager {
     }
 
     public void update(BroomStatus broomStatus) {
-        this.motorEmptyData.setPieValue(100 - broomStatus.getMotorPower());
-        this.motorValueData.setPieValue(broomStatus.getMotorPower());
+        if (broomStatus.getMotorPower() >= 0) {
+            motorChart.setClockwise(true);
+            this.motorEmptyData.setPieValue(100 - broomStatus.getMotorPower());
+            this.motorValueData.setPieValue(broomStatus.getMotorPower());
+        } else {
+            motorChart.setClockwise(false);
+            this.motorEmptyData.setPieValue(100 + broomStatus.getMotorPower());
+            this.motorValueData.setPieValue(-broomStatus.getMotorPower());
+        }
         this.steeringData.setXValue(broomStatus.getSteering());
     }
 
@@ -62,17 +70,15 @@ public class GuiManager {
     }
 
     private DoughnutChart createMotorChart() {
-
-        final DoughnutChart doughnutChart;
         motorEmptyData = new PieChart.Data("", 100);
         motorValueData = new PieChart.Data("", 0);
-        doughnutChart = new DoughnutChart(FXCollections.observableArrayList(motorValueData, motorEmptyData));
-        doughnutChart.setLabelsVisible(false);
-        doughnutChart.setAnimated(false);
-        doughnutChart.setLegendVisible(false);
-        doughnutChart.setStartAngle(270d);
+        motorChart = new DoughnutChart(FXCollections.observableArrayList(motorValueData, motorEmptyData));
+        motorChart.setLabelsVisible(false);
+        motorChart.setAnimated(false);
+        motorChart.setLegendVisible(false);
+        motorChart.setStartAngle(270d);
 
-        return doughnutChart;
+        return motorChart;
     }
 
     private BarChart<Number, String> createSteeringChart() {
