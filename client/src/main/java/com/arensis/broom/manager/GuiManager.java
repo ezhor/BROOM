@@ -23,8 +23,8 @@ import javafx.stage.Stage;
 public class GuiManager {
     private static final String STAGE_ICON_PATH = "image/stage-icon.png";
     private static final String BOOST_ICON_PATH = "image/boost-icon.png";
-    private static final String BAR_CHART_BLUE_STYLE_PATH = "./style/bar-chart-blue.css";
-    private static final String SCATTER_CHART_BLUE_CROSS_STYLE_PATH = "./style/scatter-chart-blue-cross.css";
+    private static final String BAR_CHART_BLUE_STYLE_PATH = "style/bar-chart-blue.css";
+    private static final String SCATTER_CHART_BLUE_CROSS_STYLE_PATH = "style/scatter-chart-blue-cross.css";
     private static final String PIE_CHART_RED_STYLE = "-fx-pie-color: #d50000";
     private static final String PIE_CHART_GREEN_STYLE = "-fx-pie-color: #64dd17";
 
