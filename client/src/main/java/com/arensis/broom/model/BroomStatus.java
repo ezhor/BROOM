@@ -7,6 +7,8 @@ public class BroomStatus {
     private int motorPower;
     private int steering;
     private boolean boost;
+    private int cameraRotationX;
+    private int cameraRotationY;
 
     public int getMotorPower() {
         return motorPower;
@@ -24,9 +26,28 @@ public class BroomStatus {
         this.steering = steering;
     }
 
+    public int getCameraRotationX() {
+        return cameraRotationX;
+    }
+
+    public void setCameraRotationX(int cameraRotationX) {
+        this.cameraRotationX = cameraRotationX;
+    }
+
+    public int getCameraRotationY() {
+        return cameraRotationY;
+    }
+
+    public void setCameraRotationY(int cameraRotationY) {
+        this.cameraRotationY = cameraRotationY;
+    }
+
     @Override
     public String toString() {
-        return motorPower + ";" + steering;
+        return motorPower + ";"
+                + steering + ";"
+                + cameraRotationX + ";"
+                + cameraRotationY;
     }
 
     public boolean isBoost() {

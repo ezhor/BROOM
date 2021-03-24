@@ -3,7 +3,7 @@ import socket
 
 print("Starting control socket streaming...")
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(("192.168.0.15", 2727))
+sock.connect(("192.168.0.28", 2727))
 print("Control socket started successfully")
 
 message = ""

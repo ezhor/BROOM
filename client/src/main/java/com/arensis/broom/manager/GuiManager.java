@@ -24,6 +24,7 @@ public class GuiManager {
     private static final String STAGE_ICON_PATH = "image/stage-icon.png";
     private static final String BOOST_ICON_PATH = "image/boost-icon.png";
     private static final String BAR_CHART_BLUE_STYLE_PATH = "./style/bar-chart-blue.css";
+    private static final String SCATTER_CHART_BLUE_CROSS_STYLE_PATH = "./style/scatter-chart-blue-cross.css";
     private static final String PIE_CHART_RED_STYLE = "-fx-pie-color: #d50000";
     private static final String PIE_CHART_GREEN_STYLE = "-fx-pie-color: #64dd17";
 
@@ -32,6 +33,7 @@ public class GuiManager {
     private PieChart.Data motorValueData;
     private Label motorLabel;
     private Data<Number, String> steeringData;
+    private Data<Number, Number> cameraRotationData;
     private ImageView boostIcon;
 
     public void start(Stage primaryStage, InputManager inputManager) {
@@ -42,10 +44,11 @@ public class GuiManager {
         primaryStage.setTitle("BROOM BROOM!");
         primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResource(STAGE_ICON_PATH).toExternalForm()));
         mainPane.add(createSteeringChart(), 0, 0);
-        mainPane.add(createMotorChart(), 1, 0);
-        mainPane.add(createMotorLabel(), 1, 0);
-        mainPane.add(createBoostIcon(), 2, 0);
-        scene = new Scene(mainPane, 1200, 250);
+        mainPane.add(createCameraRotationChart(), 1, 0);
+        mainPane.add(createMotorChart(), 2, 0);
+        mainPane.add(createMotorLabel(), 2, 0);
+        mainPane.add(createBoostIcon(), 3, 0);
+        scene = new Scene(mainPane, 1400, 250);
         primaryStage.setX(bounds.getMinX() + bounds.getWidth() / 2f - scene.getWidth() / 2f);
         primaryStage.setY(bounds.getMinY() + bounds.getHeight() - scene.getHeight() - 50f);
         scene.setOnKeyPressed(inputManager);
@@ -59,16 +62,18 @@ public class GuiManager {
     public void update(BroomStatus broomStatus) {
         if (broomStatus.getMotorPower() >= 0) {
             motorChart.setClockwise(true);
-            this.motorEmptyData.setPieValue(100 - broomStatus.getMotorPower());
-            this.motorValueData.setPieValue(broomStatus.getMotorPower());
+            motorEmptyData.setPieValue(100 - broomStatus.getMotorPower());
+            motorValueData.setPieValue(broomStatus.getMotorPower());
         } else {
             motorChart.setClockwise(false);
-            this.motorEmptyData.setPieValue(100 + broomStatus.getMotorPower());
-            this.motorValueData.setPieValue(-broomStatus.getMotorPower());
+            motorEmptyData.setPieValue(100 + broomStatus.getMotorPower());
+            motorValueData.setPieValue(-broomStatus.getMotorPower());
         }
         motorLabel.setText(String.valueOf(Math.abs(broomStatus.getMotorPower())));
         boostIcon.setVisible(broomStatus.isBoost());
-        this.steeringData.setXValue(broomStatus.getSteering());
+        steeringData.setXValue(broomStatus.getSteering());
+        cameraRotationData.setXValue(broomStatus.getCameraRotationX());
+        cameraRotationData.setYValue(broomStatus.getCameraRotationY());
     }
 
     private GridPane createMainGridPane() {
@@ -113,14 +118,30 @@ public class GuiManager {
 
         this.steeringData = new Data<>(0, "");
 
-        series.getData().addAll(steeringData);
-        steeringBarChart.getData().addAll(series);
+        series.getData().add(steeringData);
+        steeringBarChart.getData().add(series);
         steeringBarChart.setLegendVisible(false);
 
         steeringBarChart.getStylesheets().add(getClass().getClassLoader().getResource(BAR_CHART_BLUE_STYLE_PATH).toExternalForm());
         steeringBarChart.setAnimated(false);
 
         return steeringBarChart;
+    }
+
+    private ScatterChart<Number, Number> createCameraRotationChart() {
+        final NumberAxis xAxis = new NumberAxis(-180, 180, 10);
+        final NumberAxis yAxis = new NumberAxis(-180, 180, 10);
+        final ScatterChart<Number, Number> cameraRotationChart = new ScatterChart<>(xAxis, yAxis);
+        final XYChart.Series<Number, Number> series = new XYChart.Series<>();
+
+        cameraRotationData = new Data<>(0, 0);
+        series.getData().add(cameraRotationData);
+        cameraRotationChart.getData().add(series);
+        cameraRotationChart.setAnimated(false);
+        cameraRotationChart.setLegendVisible(false);
+        cameraRotationChart.getStylesheets().add(getClass().getClassLoader().getResource(SCATTER_CHART_BLUE_CROSS_STYLE_PATH).toExternalForm());
+
+        return cameraRotationChart;
     }
 
     private ImageView createBoostIcon() {

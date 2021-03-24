@@ -13,11 +13,12 @@ public class InputManager implements EventHandler<KeyEvent> {
     private static final String LEFT = "Left";
     private static final String RIGHT = "Right";
     private static final String KEY_PRESSED = "KEY_PRESSED";
-    private static final float LX_DEAD_ZONE = 0.15f;
+    private static final float LS_DEAD_ZONE = 0.15f;
+    private static final float RS_DEAD_ZONE = 0.15f;
 
-    private BroomStatus broomStatus;
-    private KeyboardInput keyboardInput;
-    private ControllerManager controllers;
+    private final BroomStatus broomStatus;
+    private final KeyboardInput keyboardInput;
+    private final ControllerManager controllers;
     private boolean holdingBoost;
 
     public InputManager() {
@@ -33,14 +34,14 @@ public class InputManager implements EventHandler<KeyEvent> {
             calculateBoost(controllerState.b);
             calculateMotorPowerFromGamepad(controllerState.leftTrigger, controllerState.rightTrigger);
             calculateSteeringFromGamepad(controllerState.leftStickX);
-        }else{
+            calculateCameraRotationFromGamepad(controllerState.rightStickX, controllerState.rightStickY);
+        } else {
             calculateMotorPowerFromKeyboard();
             calculateSteeringFromKeyboard();
-
         }
-
         return broomStatus;
     }
+
 
     private void calculateBoost(boolean buttonB) {
         if (buttonB) {
@@ -76,7 +77,7 @@ public class InputManager implements EventHandler<KeyEvent> {
     }
 
     private void calculateSteeringFromGamepad(float lx) {
-        if (lx < LX_DEAD_ZONE && lx > -LX_DEAD_ZONE) {
+        if (lx < LS_DEAD_ZONE && lx > -LS_DEAD_ZONE) {
             lx = 0;
         }
 
@@ -84,10 +85,18 @@ public class InputManager implements EventHandler<KeyEvent> {
     }
 
     private void calculateSteeringFromKeyboard() {
-        int rt = keyboardInput.isUp() ? 100 : 0;
-        int lt = keyboardInput.isDown() ? 100 : 0;
-
         broomStatus.setSteering(keyboardInput.isRight() ? 100 : keyboardInput.isLeft() ? -100 : 0);
+    }
+
+    private void calculateCameraRotationFromGamepad(float rightStickX, float rightStickY) {
+        if (rightStickX < RS_DEAD_ZONE && rightStickX > -RS_DEAD_ZONE &&
+                rightStickY < RS_DEAD_ZONE && rightStickY > -RS_DEAD_ZONE) {
+            rightStickX = 0;
+            rightStickY = 0;
+        }
+
+        broomStatus.setCameraRotationX(Math.round(rightStickX * 180));
+        broomStatus.setCameraRotationY(Math.round(rightStickY * 180));
     }
 
     @Override
@@ -108,7 +117,7 @@ public class InputManager implements EventHandler<KeyEvent> {
         }
     }
 
-    public void stop(){
+    public void stop() {
         controllers.quitSDLGamepad();
     }
 
