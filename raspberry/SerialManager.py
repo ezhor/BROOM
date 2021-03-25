@@ -5,6 +5,5 @@ class SerialManager():
         self.arduino = serial.Serial("/dev/ttyUSB1", 9600)
         time.sleep(1)
 
-    def send(self, data):
-        self.arduino.write(data.encode())
-        print("Sent:" + data);
+    def sendLine(self, line):
+        self.arduino.write((line + "\n").encode())
