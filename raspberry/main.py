@@ -2,7 +2,7 @@ import subprocess
 import socket
 from SerialManager import SerialManager
 
-print("Serial communication...")
+print("Starting serial communication...")
 serialManager = SerialManager()
 print("Serial communication started successfully")
 
