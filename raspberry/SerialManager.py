@@ -6,4 +6,6 @@ class SerialManager():
         time.sleep(1)
 
     def sendLine(self, line):
+        print("Sending:"+line)
         self.arduino.write((line + "\n").encode())
+        print("Sent:"+line)
