@@ -13,7 +13,7 @@ import java.util.TimerTask;
 
 @SuppressWarnings("restriction")
 public class Main extends Application {
-    private static final int UPDATE_DELAY = 50;
+    private static final int UPDATE_DELAY = 1000;
     private static final String RELAY_IP = "miranda-server.ddns.net";
     private final GuiManager guiManager = new GuiManager();
     private final InputManager inputManager = new InputManager();
