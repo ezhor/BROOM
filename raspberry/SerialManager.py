@@ -7,4 +7,4 @@ class SerialManager():
 
     def send(self, data):
         self.arduino.write(data.encode())
-        print("Sent:" + line);
+        print("Sent:" + data);
