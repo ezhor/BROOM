@@ -41,7 +41,7 @@ void parseData(String data) {
 }
 
 void sendPWM() {
-  steeringServo.write(steering * 0.9f + 90);
-  cameraRotationXServo.write(cameraRotationX + 90);
-  cameraRotationYServo.write(cameraRotationY + 90);
+  steeringServo.write(steering);
+  cameraRotationXServo.write(cameraRotationX);
+  cameraRotationYServo.write(cameraRotationY);
 }

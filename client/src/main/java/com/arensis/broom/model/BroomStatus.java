@@ -45,9 +45,9 @@ public class BroomStatus {
     @Override
     public String toString() {
         return format(motorPower)
-                + format(steering)
-                + format(cameraRotationX)
-                + format(cameraRotationY);
+                + format(Math.round(steering * 0.9f + 90))
+                + format(cameraRotationX + 90)
+                + format(cameraRotationY + 90);
     }
 
     private String format(int number){
