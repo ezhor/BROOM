@@ -14,7 +14,7 @@ import java.util.TimerTask;
 @SuppressWarnings("restriction")
 public class Main extends Application {
     private static final int UPDATE_DELAY = 50;
-    private static final String RELAY_IP = "mirandaserver.ddns.net";
+    private static final String RELAY_IP = "miranda-server.ddns.net";
     private final GuiManager guiManager = new GuiManager();
     private final InputManager inputManager = new InputManager();
     private final CommunicationManager communicationManager = new CommunicationManager();
@@ -26,7 +26,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //communicationManager.start();
+        communicationManager.start();
         guiManager.start(primaryStage, inputManager);
         startUpdateThread();
     }
@@ -36,8 +36,7 @@ public class Main extends Application {
             @Override
             public void run() {
                 final BroomStatus broomStatus = inputManager.fetchInputs();
-                //communicationManager.update(broomStatus);
-                System.out.println(broomStatus);
+                communicationManager.update(broomStatus);
                 Platform.runLater(() -> guiManager.update(broomStatus));
             }
         }, 0, UPDATE_DELAY);
