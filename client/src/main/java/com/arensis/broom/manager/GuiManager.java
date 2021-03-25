@@ -129,8 +129,8 @@ public class GuiManager {
     }
 
     private ScatterChart<Number, Number> createCameraRotationChart() {
-        final NumberAxis xAxis = new NumberAxis(-180, 180, 10);
-        final NumberAxis yAxis = new NumberAxis(-180, 180, 10);
+        final NumberAxis xAxis = new NumberAxis(-90, 90, 10);
+        final NumberAxis yAxis = new NumberAxis(-90, 90, 10);
         final ScatterChart<Number, Number> cameraRotationChart = new ScatterChart<>(xAxis, yAxis);
         final XYChart.Series<Number, Number> series = new XYChart.Series<>();
 

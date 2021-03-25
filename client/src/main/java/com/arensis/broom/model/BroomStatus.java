@@ -44,10 +44,14 @@ public class BroomStatus {
 
     @Override
     public String toString() {
-        return motorPower + ";"
-                + steering + ";"
-                + cameraRotationX + ";"
-                + cameraRotationY;
+        return format(motorPower)
+                + format(steering)
+                + format(cameraRotationX)
+                + format(cameraRotationY);
+    }
+
+    private String format(int number){
+        return String.format("%04d", number);
     }
 
     public boolean isBoost() {

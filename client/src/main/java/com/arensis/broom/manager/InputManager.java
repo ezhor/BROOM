@@ -95,8 +95,8 @@ public class InputManager implements EventHandler<KeyEvent> {
             rightStickY = 0;
         }
 
-        broomStatus.setCameraRotationX(Math.round(rightStickX * 180));
-        broomStatus.setCameraRotationY(Math.round(rightStickY * 180));
+        broomStatus.setCameraRotationX(Math.round(rightStickX * 90));
+        broomStatus.setCameraRotationY(Math.round(rightStickY * 90));
     }
 
     @Override
