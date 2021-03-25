@@ -32,6 +32,7 @@ public class CommunicationManager {
 	private void send(String string){
 		try {
 			outputStream.write(string.concat("\n").getBytes());
+			System.out.println(string);
 		} catch (IOException e) {
 			e.printStackTrace();
 			start();
