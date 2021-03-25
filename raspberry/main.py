@@ -1,7 +1,12 @@
 import subprocess
 import socket
+from SerialManager import SerialManager
 
-print("Starting control socket streaming...")
+print("Serial communication...")
+serialManager = SerialManager()
+print("Serial communication started successfully")
+
+print("Starting control socket...")
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect(("192.168.0.15", 2727))
 print("Control socket started successfully")
@@ -12,4 +17,5 @@ while True:
     if data != "\n":
         message += data
     else:
+        serialManager.sendLine(message)
         message = ""
