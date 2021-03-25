@@ -5,6 +5,6 @@ class SerialManager():
         self.arduino = serial.Serial("/dev/ttyAMA0", 9600)
         time.sleep(1)
 
-    def sendLine(self, line):
-        self.arduino.write((line + "\n").encode())
-        print("Sent:" + line + "\n");
+    def send(self, data):
+        self.arduino.write(data.encode())
+        print("Sent:" + line);

@@ -13,9 +13,11 @@ print("Control socket started successfully")
 
 message = ""
 while True:
-    data = sock.recv(1)
+    data = sock.recv(1)    
     if data != "\n":
+        print("Socket message: " + message)
         message += data
     else:
-        serialManager.sendLine(message)
+        print("Serial message: " + message)
+        serialManager.send(message)
         message = ""
