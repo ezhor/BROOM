@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Raspberry Start" > raspberry.log
+cd ~/BROOM
 echo "Pulling from git..." > raspberry.log
 git pull
 echo "git pull OK" >> raspberry.log
