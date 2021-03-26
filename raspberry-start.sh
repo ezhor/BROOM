@@ -1,6 +1,9 @@
 #!/bin/bash
 echo "Raspberry Start" > raspberry.log
-cd /home/pi/BROOM
+echo "Killing previous raspivid and nc executions..." > raspberry.log
+killall raspivid
+killall nc
+echo "Killed OK" > raspberry.log
 echo "Pulling from git..." > raspberry.log
 git pull
 echo "git pull OK" >> raspberry.log
