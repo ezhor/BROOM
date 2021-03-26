@@ -4,4 +4,3 @@ P1=$!
 python ./raspberry/main.py &
 P2=$!
 wait $P1 $P2
-
