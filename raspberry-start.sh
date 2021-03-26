@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Raspberry Start" > raspberry.log
 echo "Pulling from git..." > raspberry.log
 git pull
