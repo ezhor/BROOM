@@ -3,7 +3,6 @@ echo "Raspberry Start" > raspberry.log
 echo "Killing previous raspivid and nc executions..." > raspberry.log
 killall raspivid
 killall nc
-sleep 30s
 echo "Killed OK" > raspberry.log
 echo "Pulling from git..." > raspberry.log
 git pull
