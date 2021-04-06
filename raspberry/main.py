@@ -8,7 +8,7 @@ print("Serial communication started successfully")
 
 print("Starting control socket...")
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(("miranda-server.ddns.net", 2727))
+sock.connect(("192.168.0.30", 2727))
 print("Control socket started successfully")
 
 message = ""
