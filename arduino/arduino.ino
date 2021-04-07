@@ -15,7 +15,8 @@ void setup() {
   steeringServo.attach(5);
   cameraRotationXServo.attach(6);
   cameraRotationYServo.attach(9);
-  
+
+  motorPWM.writeMicroseconds(1000);
   steeringServo.write(90);
   cameraRotationXServo.write(90);
   cameraRotationYServo.write(90);
