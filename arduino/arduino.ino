@@ -16,7 +16,7 @@ void setup() {
   cameraRotationXServo.attach(6);
   cameraRotationYServo.attach(9);
 
-  motorPWM.writeMicroseconds(1000);
+  motorPWM.writeMicroseconds(1500);
   steeringServo.write(90);
   cameraRotationXServo.write(90);
   cameraRotationYServo.write(90);
@@ -42,7 +42,7 @@ void parseData(String data) {
 }
 
 void sendPWM() {
-  motorPWM.writeMicroseconds(1000 + 10.0 * motorPower);
+  motorPWM.writeMicroseconds(1500 + 5.0 * motorPower);
   steeringServo.write(steering);
   cameraRotationXServo.write(cameraRotationX);
   cameraRotationYServo.write(cameraRotationY);
