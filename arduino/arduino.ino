@@ -41,6 +41,7 @@ void parseData(String data) {
 }
 
 void sendPWM() {
+  motorPWM.writeMicroseconds(1000 + 10.0 * motorPower);
   steeringServo.write(steering);
   cameraRotationXServo.write(cameraRotationX);
   cameraRotationYServo.write(cameraRotationY);
