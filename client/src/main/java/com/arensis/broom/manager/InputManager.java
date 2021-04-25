@@ -35,11 +35,18 @@ public class InputManager implements EventHandler<KeyEvent> {
             calculateMotorPowerFromGamepad(controllerState.leftTrigger, controllerState.rightTrigger);
             calculateSteeringFromGamepad(controllerState.leftStickX);
             calculateCameraRotationFromGamepad(controllerState.rightStickX, controllerState.rightStickY);
+            calculateLedFromGamepad(controllerState.yJustPressed);
         } else {
             calculateMotorPowerFromKeyboard();
             calculateSteeringFromKeyboard();
         }
         return broomStatus;
+    }
+
+    private void calculateLedFromGamepad(boolean yJustPressed) {
+        if(yJustPressed){
+            broomStatus.setLed(!broomStatus.isLed());
+        }
     }
 
 
