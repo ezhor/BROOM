@@ -48,8 +48,8 @@ void parseData(String data) {
 
 void sendPWM() {
   motorPWM.writeMicroseconds(1500 + 5.0 * motorPower);
-  steeringServo.write(steering);
-  cameraRotationXServo.write(cameraRotationX);
-  cameraRotationYServo.write(cameraRotationY);
+  steeringServo.write(-steering/2.0);
+  cameraRotationXServo.write(-cameraRotationX);
+  cameraRotationYServo.write(-cameraRotationY);
   digitalWrite(12, led ? HIGH : LOW);
 }
