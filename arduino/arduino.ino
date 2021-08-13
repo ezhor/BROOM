@@ -16,7 +16,6 @@ void setup() {
   steeringServo.attach(5);
   cameraRotationXServo.attach(6);
   cameraRotationYServo.attach(9);
-  pinMode(12, OUTPUT);
   
 
   motorPWM.writeMicroseconds(1500);
@@ -41,15 +40,14 @@ void parseData(String data) {
   motorPower = data.substring(0, 4).toInt();
   steering = data.substring(4, 8).toInt();
   cameraRotationX = data.substring(8, 12).toInt();
-  cameraRotationY = data.substring(12, 16).toInt();
-  led = data.substring(12, 16).toInt();
+  cameraRotationY = data.substring(12, 16).toInt();  
   led = data.substring(16, 17) == "1";
 }
 
 void sendPWM() {
-  motorPWM.writeMicroseconds(1500 + 5.0 * motorPower);
-  steeringServo.write(-steering/2.0);
-  cameraRotationXServo.write(-cameraRotationX);
-  cameraRotationYServo.write(-cameraRotationY);
+  motorPWM.writeMicroseconds(map(motorPower, -100, 100, 1000, 2000));
+  steeringServo.write(map(steering, 0, 180, 135, 45));
+  cameraRotationXServo.write(map(cameraRotationX, 0, 180, 180, 0));
+  cameraRotationYServo.write(map(cameraRotationY, 0, 180, 180, 0));
   digitalWrite(12, led ? HIGH : LOW);
 }
