@@ -8,7 +8,7 @@ echo "Pulling from git..." > raspberry.log
 git pull
 echo "git pull OK" >> raspberry.log
 echo "Opening netcat from camera" >> raspberry.log
-(/opt/vc/bin/raspivid -t 0 -w 640 -h 360 -hf -fps 60 -o - | nc -lk -p 5001) &
+(raspivid -n -ih -t 0 -rot 0 -w 640 -h 360 -b 1000000 -fps 60 -o - | nc -lkv4 5001) &
 echo "Net camera OK" >> raspberry.log
 P1=$!
 echo "Opening Python communication" >> raspberry.log
