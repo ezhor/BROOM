@@ -29,3 +29,4 @@ while True:
                 message = ""
         else:
             connected = False
+s.close();
