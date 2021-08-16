@@ -11,17 +11,22 @@ print("Serial communication started successfully")
 
 print("Starting control socket...")
 message = ""
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    while True:    
-        conn, addr = s.accept()
-        with conn:
-            print("Connected by ", addr)
-            while True:
-                data = conn.recv(1)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
+s.listen()
+while True:    
+    connection, addr = s.accept()
+    connected = True
+    with connection:
+        print("Connected by ", addr)
+        while connected:
+            data = connection.recv(1)
+            if isinstance(data, str):
+                print(type(data))
                 if data != "\n":
                     message += data
                 else:
                     serialManager.sendLine(message)
                     message = ""
+            else:
+                connected = False
