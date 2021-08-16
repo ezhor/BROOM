@@ -17,16 +17,15 @@ s.listen(1)
 while True:    
     connection, addr = s.accept()
     connected = True
-    with connection:
-        print("Connected by ", addr)
-        while connected:
-            data = connection.recv(1)
-            if isinstance(data, str):
-                print(type(data))
-                if data != "\n":
-                    message += data
-                else:
-                    serialManager.sendLine(message)
-                    message = ""
+    print("Connected by ", addr)
+    while connected:
+        data = connection.recv(1)
+        if isinstance(data, str):
+            print(type(data))
+            if data != "\n":
+                message += data
             else:
-                connected = False
+                serialManager.sendLine(message)
+                message = ""
+        else:
+            connected = False
