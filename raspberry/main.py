@@ -16,12 +16,12 @@ s.bind((HOST, PORT))
 s.listen(1)
 while True:    
     connection, addr = s.accept()
-    connected = True    
+    print("Client connected: ", addr)
+    connected = True
     data = ""
     while connected:
         data = connection.recv(1)
-        if isinstance(data, str):
-            print(type(data))
+        if data != "":
             if data != "\n":
                 message += data
             else:
