@@ -14,19 +14,23 @@ message = ""
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
 s.listen(1)
-while True:    
-    connection, addr = s.accept()
-    print("Client connected: ", addr)
-    connected = True
-    data = ""
-    while connected:
-        data = connection.recv(1)
-        if data != "":
-            if data != "\n":
-                message += data
+while True:
+    try:    
+        connection, addr = s.accept()
+        print("Client connected: ", addr)
+        connected = True
+        data = ""
+        while connected:
+            data = connection.recv(1)
+            if data != "":
+                if data != "\n":
+                    message += data
+                else:
+                    serialManager.sendLine(message)
+                    message = ""
             else:
-                serialManager.sendLine(message)
-                message = ""
-        else:
-            connected = False
-s.close();
+                connected = False
+    except e:
+        print("Exception:", e)
+if(s != null):
+    s.close();
