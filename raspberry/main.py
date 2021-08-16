@@ -16,8 +16,8 @@ s.bind((HOST, PORT))
 s.listen(1)
 while True:    
     connection, addr = s.accept()
-    connected = True
-    print("Connected by ", addr)
+    connected = True    
+    data = ""
     while connected:
         data = connection.recv(1)
         if isinstance(data, str):
