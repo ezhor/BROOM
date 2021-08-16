@@ -13,7 +13,7 @@ print("Starting control socket...")
 message = ""
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
-s.listen()
+s.listen(1)
 while True:    
     connection, addr = s.accept()
     connected = True
