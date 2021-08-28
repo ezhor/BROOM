@@ -6,7 +6,5 @@ class SerialManager():
         time.sleep(1)
 
     def sendLine(self, line):
-        try:
-            self.arduino.write((line + "\n").encode())
-        except Exception:
-            print("Serial error")
+        print("Line send: " + line[0:4] + "|" + line[4:8] + "|"+ line[8:12] + "|"+ line[12:16] + "|"+ line[16:17])
+        self.arduino.write((line + "\n").encode())
