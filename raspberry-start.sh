@@ -12,7 +12,7 @@ git pull
 echo "git pull OK" >> raspberry.log
 
 echo "Starting video streaming..." >> raspberry.log
-(/opt/vc/bin/raspivid -n -ih -t 0 -rot 0 -w 512 -h 288 -b 1000000 -fps 60 -o - | nc -lk4 5001) &
+(/opt/vc/bin/raspivid -n -ih -t 0 -rot 0 -w 512 -h 288 -b 1000000 -fps 60 -o - | nc -luk4 5001) &
 echo "Video streaming OK" >> raspberry.log
 P1=$!
 
