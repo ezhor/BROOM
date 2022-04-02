@@ -20,7 +20,7 @@ while True:
         data, address = s.recvfrom(1024)
         print("Length: " + str(len(data)))
         if(len(data) == PACKET_LENGTH ):
-            serialManager.sendLine(message)
+            serialManager.sendData(message)
     except Exception as e:
         print(e)
 if(s != null):
