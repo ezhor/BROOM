@@ -4,6 +4,7 @@ from SerialManager import SerialManager
 
 HOST = ""
 PORT = 2727
+PACKET_LENGTH = 18
 
 print("Starting serial communication...")
 serialManager = SerialManager()
@@ -11,26 +12,16 @@ print("Serial communication started successfully")
 
 print("Starting control socket...")
 message = ""
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind((HOST, PORT))
-s.listen(1)
+print("Control socket started")
 while True:
     try:    
-        connection, addr = s.accept()
-        print("Client connected: ", addr)
-        connected = True
-        data = ""
-        while connected:
-            data = connection.recv(1)
-            if data != "":
-                if data != "\n":
-                    message += data
-                else:
-                    serialManager.sendLine(message)
-                    message = ""
-            else:
-                connected = False
-    except e:
-        print("Exception:", e)
+        data, address = s.recvfrom(1024)
+        print("Length: " + str(len(data)))
+        if(len(data) == PACKET_LENGTH ):
+            serialManager.sendLine(message)
+    except Exception as e:
+        print(e)
 if(s != null):
     s.close();
