@@ -8,5 +8,5 @@ class SerialManager():
     def sendLine(self, line):
         self.arduino.write((line + "\n").encode())
     
-    def sendData(self, line):
+    def sendData(self, data):
         self.arduino.write(data)
