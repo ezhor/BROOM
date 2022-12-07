@@ -1,0 +1,13 @@
+				@font-face {
+					font-family: 'arca';
+					src: url('/wp-content/uploads/useanyfont/2017arca.woff2') format('woff2'),
+						url('/wp-content/uploads/useanyfont/2017arca.woff') format('woff');
+					font-display: auto;
+				}
+
+				.arca{font-family: 'arca' !important;}
+
+						h1, h2, h3, h4, h5, h6, .entry-title, body.single-post .entry-title, body.page .entry-title, body.category .entry-title, .widget-title, .site-title{
+					font-family: 'arca' !important;
+				}
+		
